@@ -1,57 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
-<body>
-    <main class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Controle de Tarefas</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h2>Nova Tarefa</h2>
-            </div>
-        </div>
-        <form name="nova-tarefa" action="inserir-tarefa.php" method="post">
-            <div class="row">
-                <div class="col">
-                    <input name="tarefa" class="form-control" placeholder="Digite a descrição da nova tarefa">
-                </div>
-            </div>
-            <div class="row pt-3">
-                <div class="col">
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
-            </div>
-        </form>
+<?php include_once "header.php";?>
+<?php include_once "mensagens.php"?>
+<!-- include_once mesmo que você chame o include mais de uma vez ele não adiciona -->
+<!-- inicio conteudo -->
+<form class="d-flex justify-content-center align-items-center mb-4" action="inserir-tarefa.php" method="post">
+    <div class="form-outline flex-fill">
+        <input  id="form2" class="form-control" placeholder="Nova tarefa" name="tarefa">
+        <br>
+    </div>
+    <button type="submit" class="btn btn-info ms-2"><i class="bi bi-plus-circle-fill"></i>ADD</button>
+</form>
 
-        <?php
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Todas</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Em execução</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Concluídas<i class="bi bi-0-circle"></i>
+        </a>
+    </li>
+</ul>
 
-use function PHPSTORM_META\map;
-        include "conexao.php";
-    
-        $sqlBusca = "select * from t_tarefas";
 
-        $todasAsTarefas = mysqli_query($conexao, $sqlBusca);
-
-        while($umaTarefa = mysqli_fetch_assoc($todasAsTarefas)){
-            ?>
+<ul class="list-group mb-0">
+    <?php
+    include "conexao.php";
+    $sqlBusca = "select * from t_tarefas";
+    $todasAsTarefas = mysqli_query($conexao, $sqlBusca);
+    while ($umaTarefa = mysqli_fetch_assoc($todasAsTarefas)) {
+    ?>
+        <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded fundo-cinza justify-content-between">
             <?php echo $umaTarefa['id']; ?> -
-            <?php echo $umaTarefa['descricao']; ?>
-            <a class="btn btn-warning">Alterar</a>
-            <a class="btn btn-danger" href="excluir-tarefa.php?id=<?php echo $umaTarefa['id']; ?>">Excluir</a>
-            <br>
-            <?php
-        }
-        mysqli_close($conexao);
-        ?>
-    </main>
-</body>
-</html>
+            <?php echo $umaTarefa['descricao']; ?> 
+            <span>
+                <a class='btn btn-lg' href="alterar-tarefa.php?id=<?php echo $umaTarefa['id'] ?>"> <i class="bi bi-pencil-fill"></i></a>
+                <a class='btn btn-lg btn-danger' href="excluir-tarefa.php?id=<?php echo $umaTarefa['id'] ?>"><i class="bi bi-trash3-fill"></i></a>
+            </span>
+        </li>
+    <?php
+    }
+    mysqli_close($conexao);
+    ?>
+</ul>
+<!-- fim conteudo -->
+<?php include_once "footer.php";?>
