@@ -1,13 +1,14 @@
 <?php 
 $tarefa = $_POST['tarefa'];
-
+$responsavel = $_POST['responsavel'];
+$status = $_POST['status'];
 
 //conexão com Banco de Dados 
 
 include "conexao.php";
 
 
-$sqlGravar = "insert into t_tarefas(descricao) values('$tarefa')";
+$sqlGravar = "insert into t_tarefas(descricao,responsavel,status) values('$tarefa','$responsavel','$status')";
 
 // tentar inserir dois itens de tarefa para fazer ao mesmo tempo ex insert into t_tarefas(descricao, responsavel) values ('$tarefa', '$responsavel');
 
