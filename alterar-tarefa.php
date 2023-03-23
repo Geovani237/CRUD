@@ -16,7 +16,7 @@ $todasTarefas = mysqli_query($conexao, $sqlBusca);
 while($umaTarefa = mysqli_fetch_assoc($todasTarefas)){
     $descricao = $umaTarefa['descricao'];
     $responsavel = $umaTarefa['responsavel'];
-    $tatus = $umaTarefa['status'];
+    $status = $umaTarefa['status'];
 }
 mysqli_close($conexao);
 ?>
